@@ -7,7 +7,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 const Login = () => {
 
-    const { logIn, signInWithGoogle } = useContext(AuthContext)
+    const { logIn, signInWithGoogle, signInWithGitHub } = useContext(AuthContext)
     const navigate = useNavigate()
 
     const handleLogin = (e) => {
@@ -27,6 +27,12 @@ const Login = () => {
 
     const handleGoggleSignIn = () => {
         signInWithGoogle()
+            .then(result => { console.log(result.user); })
+            .catch(error => { console.error(error.message); })
+    }
+
+    const handleGitHubSignIn = () => {
+        signInWithGitHub()
             .then(result => { console.log(result.user); })
             .catch(error => { console.error(error.message); })
     }
@@ -72,7 +78,7 @@ const Login = () => {
                                 <div className="text-2xl"><FcGoogle></FcGoogle></div>
                                 <div className="font-medium">Log in with Google</div>
                             </div>
-                            <div className="mt-3 flex justify-center items-center gap-4 border-[1px] border-zinc-300  mx-5 py-2 rounded-3xl">
+                            <div onClick={handleGitHubSignIn} className="mt-3 flex justify-center items-center gap-4 border-[1px] border-zinc-300  mx-5 py-2 rounded-3xl">
                                 <div className="text-2xl"><BsGithub></BsGithub></div>
                                 <div className="font-medium">Log in with GitHub</div>
                             </div>

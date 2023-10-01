@@ -1,4 +1,4 @@
-import { GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
+import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../../firebase/firebase.congig";
 import PropTypes from 'prop-types';
@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 export const AuthContext = createContext(null)
 
 const googleProvider = new GoogleAuthProvider();
+const githubProvider = new GithubAuthProvider();
 
 const AuthProvider = ({ children }) => {
 
@@ -28,6 +29,12 @@ const AuthProvider = ({ children }) => {
         return signInWithPopup(auth, googleProvider)
     }
 
+    const signInWithGitHub= ()=>{
+        setLoading(true)
+        return signInWithPopup(auth, githubProvider)
+    }
+
+
     const logOut = ()=>{
         setLoading(true)
         return signOut(auth)
@@ -44,7 +51,7 @@ const AuthProvider = ({ children }) => {
         }
     }, [])
 
-    const authInfo = { user, loading, createUser, logIn, signInWithGoogle, logOut}
+    const authInfo = { user, loading, createUser, logIn, signInWithGoogle, signInWithGitHub, logOut}
 
     return (
         <AuthContext.Provider value={authInfo}>
